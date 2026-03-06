@@ -1,19 +1,17 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import Table from './components/table'
+import { useState } from "react";
+import "./App.css";
+import Table from "./components/table";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [start, setStart] = useState(false);
 
   return (
     <>
-      
       <h1>improve your apm lol skills</h1>
-      <Table/>
+      <Table start={start} />
+      <button onClick={() => setStart(true)}>Start</button>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
