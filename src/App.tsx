@@ -1,15 +1,34 @@
-import { useState } from "react";
-import "./App.css";
-import Table from "./components/table";
+import { useState } from 'react';
+import Menu from './components/menu';
+import Table from './components/table';
+import type { GameState } from './types/game';
 
 function App() {
-  const [start, setStart] = useState(false);
+  const [gameState, setGameState] = useState<GameState>('menu');
+  const [score, setScore] = useState(0);
+  const [lastApm, setLastApm] = useState(0);
+
+  function handleStart() {
+    setScore(0);
+    setGameState('playing');
+  }
+
+  function handleScore() {
+    setScore((prev) => prev + 1);
+  }
+
+  function handleBackToMenu(apm: number) {
+    setLastApm(apm);
+    setGameState('menu');
+  }
 
   return (
     <>
-      <h1>improve your apm lol skills</h1>
-      <Table start={start} />
-      <button onClick={() => setStart(true)}>Start</button>
+      {gameState === 'menu' ? (
+        <Menu score={score} apm={lastApm} onStart={handleStart} />
+      ) : (
+        <Table score={score} onScore={handleScore} onBackToMenu={handleBackToMenu} />
+      )}
     </>
   );
 }
